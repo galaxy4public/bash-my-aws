@@ -2,13 +2,13 @@ _bma_stacks_completion() {
   local command="$1"
   local word="$2"
 
-  case "${COMP_CWORD}" in
+  case "$COMP_CWORD" in
     1)
-      COMPREPLY=( $(compgen -W "$(stacks)" -- ${word}) )
+      COMPREPLY=( $(compgen -W "$(stacks)" -- "$word") )
       return 0
       ;;
     *)
-      COMPREPLY=( $(compgen -f ${word}) )
+      COMPREPLY=( $(compgen -f "$word") )
       return 0
       ;;
   esac
@@ -18,20 +18,20 @@ _bma_instances_completion() {
     local command="$1"
     local word="$2"
 
-    case $word in
+    case "$word" in
       "") options="i-a i-b" ;;
-      *)  options=$(instances) ;;
+      *)  options="$(instances)" ;;
     esac
 
-    COMPREPLY=($(compgen -W "${options}" -- ${word}))
+    COMPREPLY=( $(compgen -W "$options" -- "$word") )
     return 0
 }
 
 _bma_asgs_completion() {
     local command="$1"
     local word="$2"
-    local options=$(asgs --query 'AutoScalingGroups[][{"AutoScalingGroupName": AutoScalingGroupName}][]')
-    COMPREPLY=($(compgen -W "${options}" -- ${word}))
+    local options="$(asgs --query 'AutoScalingGroups[][{\"AutoScalingGroupName\": AutoScalingGroupName}][]')"
+    COMPREPLY=( $(compgen -W "$options" -- "$word") )
     return 0
 }
 
